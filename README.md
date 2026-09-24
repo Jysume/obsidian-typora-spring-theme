@@ -6,7 +6,7 @@ Spring is a theme for [Obsidian](https://obsidian.md/) which is inspired by [typ
 
 ## Install
 Community Theme Store (Recommended)
-Search Spring in Obsidian community theme store and download it.
+Search Typora-Spring in Obsidian community theme store and download it.
 
 ## Contributing
 Thanks for Issues and PRs!

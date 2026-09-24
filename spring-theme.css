@@ -1,0 +1,2020 @@
+/* ===========================================================================
+   Spring for Obsidian — Typora Spring 主题移植版
+   ---------------------------------------------------------------------------
+   安装位置：<vault>/.obsidian/snippets/spring.css
+   启用方式：设置 → 外观 → CSS 代码片段 → 刷新 → 打开 spring
+   字体策略：沿用 Obsidian 设置里的字体，本片段不覆盖 font-family
+   ---------------------------------------------------------------------------
+   目录
+     §1  设计令牌（原 Spring 变量）
+     §2  Obsidian 变量映射
+     §3  全局样式
+     §4  阅读模式
+     §5  编辑模式 / Live Preview
+     §6  Callout
+     §7  代码块（容器 + 语法高亮）
+     §8  Obsidian UI 主题
+     §9  打印样式
+   =========================================================================== */
+
+
+/* ===========================================================================
+   §1  设计令牌
+   =========================================================================== */
+body {
+    /* —— 排版 —— */
+    --text-align: justify;
+
+    /* —— 交互动效总开关（0 = 关闭，1 = 开启） —— */
+    --use-dynamic-effect: 1;
+    --h1-hover-effect: 1;
+    --h2-after-effect: 1;
+    --h3-6-hover-effect: 1;
+    --p-hover-effect: 1;
+    --img-hover-effect: 1;
+    --blockquote-hover-effect: 1;
+    --alert-hover-effect: 1;
+    --strong-hover-effect: 1;
+    --em-hover-effect: 1;
+    --u-hover-effect: 1;
+    --mark-hover-effect: 1;
+    --del-hover-effect: 1;
+    --code-hover-effect: 1;
+    --fence-hover-effect: 0;
+    --list-marker-effect: 1;
+    --list-ol-text-style: normal;
+    --hr-hover-effect: 1;
+    --table-hover-effect: 1;
+
+    /* —— 基础配色 —— */
+    --body-text-color: #282c34;
+    --content-write-bg-color: #fefefe;
+    --selection-color: #def2e8;
+    --write-h1-before-bg: linear-gradient(90deg, rgba(152, 251, 152, 0), #e8f4ee, rgba(152, 251, 152, 0));
+    --write-h2-after-bg: linear-gradient(90deg, rgba(69, 158, 106, 0), #3ea173a6, rgba(87, 158, 69, 0));
+    --p-hover-bg-color: rgba(123, 181, 147, calc(0.1 * var(--p-hover-effect) * var(--use-dynamic-effect)));
+
+    /* —— 列表 —— */
+    --ul-marker-color: #087725;
+    --ulul-marker-color: #087725;
+    --ululul-marker-color: #087725;
+    --ol-hover-marker-color: rgb(0, calc(100 * var(--list-marker-effect) * var(--use-dynamic-effect)), 0);
+
+    /* —— 引用块 —— */
+    --blockquote-border-color: #54a12b;
+    --blockquote-bg-color: #eef4e886;
+    --blockquote-hover-border-color: #54a12b;
+    --blockquote-thead-bg-color: #54a12bd4;
+    --blockquote-thead-text-color: #3b3b3b4e;
+    --blockquote-td-bg-color: #fafafa;
+
+    /* —— Callout: tip —— */
+    --alert-tip-border-color: #1f883d;
+    --alert-tip-bg-color: #e8f4eb90;
+    --alert-tip-hover-border-color: #1f883d;
+    --alert-tip-thead-bg-color: #3b9457;
+    --alert-tip-thead-text-color: #fafbfa;
+
+    /* —— Callout: caution —— */
+    --alert-caution-border-color: #cf222e;
+    --alert-caution-bg-color: #f5ecec86;
+    --alert-caution-hover-border-color: #cf222e;
+    --alert-caution-hover-bg-color: #cf222d0a;
+    --alter-caution-selection-bg-color: #cf222d17;
+    --alert-caution-text-color: #cf222e;
+    --alert-caution-thead-bg-color: #d83c46;
+    --alert-caution-thead-text-color: #fafbfa;
+    --alert-caution-td-hover-bg-color: #f5ecec;
+    --alert-caution-list-item-marker-color: #cf222e;
+
+    /* —— Callout: warning —— */
+    --alert-warning-border-color: #9a6700;
+    --alert-warning-bg-color: #f4f1e97d;
+    --alert-warning-hover-border-color: #9a6700;
+    --alert-warning-hover-bg-color: #9a67000a;
+    --alert-warning-selection-bg-color: #9a670017;
+    --alert-warning-text-color: #9a6700;
+    --alert-warning-thead-bg-color: #b7831c;
+    --alert-warning-thead-text-color: #fafbfa;
+    --alert-warning-list-item-marker-color: #9a6700;
+
+    /* —— Callout: important —— */
+    --alert-important-border-color: #8250df;
+    --alert-important-bg-color: #eae6f286;
+    --alert-important-hover-border-color: #8250df;
+    --alert-important-hover-bg-color: #8250df0a;
+    --alert-important-selection-bg-color: #8250df17;
+    --alert-important-text-color: #8250df;
+    --alert-important-thead-bg-color: #8250df;
+    --alert-important-thead-text-color: #fafbfa;
+    --alert-important-list-item-marker-color: #8250df;
+
+    /* —— Callout: note —— */
+    --alert-note-border-color: #0969da;
+    --alert-note-bg-color: #e5ebf179;
+    --alert-note-hover-border-color: #0969da;
+    --alert-note-hover-bg-color: #0969da0a;
+    --alert-note-selection-bg-color: #0969da17;
+    --alert-note-text-color: #0969da;
+    --alert-note-thead-bg-color: #0969da;
+    --alert-note-thead-text-color: #fafbfa;
+    --alert-note-list-item-marker-color: #0969da;
+
+    /* —— Callout 通用 —— */
+    --alert-code-bg-color: #67676716;
+    --alert-code-3circle-1: #fc625d;
+    --alert-code-3circle-2: #fdbc40;
+    --alert-code-3circle-3: #34c759;
+    --alert-td-bg-color: #fafafa;
+
+    /* —— 分割线 —— */
+    --hr-bg-image: linear-gradient(90deg, #5ea67c, #2f845e, #5ea67c);
+    --hr-box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+
+    /* —— 表格 —— */
+    --table-border-color: #02362215;
+    --table-td-hover-bg: rgba(239, 245, 242, calc(0.7 * var(--table-hover-effect)));
+    --blockquote-td-hover-bg: rgba(239, 245, 242, calc(0.7 * var(--table-hover-effect)));
+    --alert-tip-td-hover-bg: rgba(239, 245, 242, calc(0.7 * var(--table-hover-effect)));
+    --alert-caution-td-hover-bg: rgba(245, 236, 236, calc(0.7 * var(--table-hover-effect)));
+    --alert-warning-td-hover-bg: rgba(245, 241, 236, calc(0.7 * var(--table-hover-effect)));
+    --alert-important-td-hover-bg: rgba(236, 236, 245, calc(0.7 * var(--table-hover-effect)));
+    --alert-note-td-hover-bg: rgba(236, 236, 245, calc(0.7 * var(--table-hover-effect)));
+    --table-thead-bg-color: #eff5f2;
+    --table-thead-text-color: #06621e;
+    --table-tbody-border-color: #e8f4ee;
+    --table-edit-bg-color: #ffffff;
+    --table-edit-hover-bg-color: #e8f4ee;
+    --table-webkit-box-shadow-color1: rgba(0, 0, 0, 0.16);
+    --table-webkit-box-shadow-color2: rgba(0, 0, 0, 0.12);
+    --table-reset-bg-color: #ffffff;
+    --table-reset-input-color: #282c34;
+    --table-some-border-top-color: #eee;
+    --table-meta-block-bg-color: #eaf3ec;
+    --table-meta-block-color: #3f8a5f;
+
+    /* —— 任务列表 —— */
+    --task-list-border-color: #737373;
+    --task-list-bg-color: #ffffff;
+    --task-list-input-after-border-color: #fff;
+    --task-list-input-checked-bg-color: #399b6f;
+    --task-list-done-color: #999;
+
+    /* —— 数学公式 / 原始 HTML 块 —— */
+    --math-html-rawblock-bg-color: #f5f6f7;
+    --math-html-rawblock-control-bg-color: #f5f6f7;
+    --math-html-rawblock-tooltip-bg-color: #f5f6f7;
+    --math-html-rawblock-input-color: #282c34;
+    --math-html-rawblock-gutter-bg-color: #f5f6f7;
+    --math-html-rawblock-selected-bg-color: #bac6e9;
+    --math-html-rawblock-selected-bg-color2: #def2e8;
+
+    /* —— 文本装饰 —— */
+    --strong-color: #06621e;
+    --em-color: #000000;
+    --em-hover-color: #006400;
+    --u-border-color: rgb(9, 156, 70);
+    --code-bg-color: rgba(221, 235, 213, 0.5);
+    --code-color: #359d09;
+    --code-hover-bg-color: rgba(221, 235, 213, calc(0.5 + 0.5 * var(--code-hover-effect) * var(--use-dynamic-effect)));
+    --del-color: rgba(50, 100, 50, 0.5);
+    --del-text-decoration-color: rgba(76, 175, 80, 0.7);
+    --del-hover-color: rgba(50, 100, 50, calc(0.5 + 0.5 * var(--del-hover-effect) * var(--use-dynamic-effect)));
+    --del-hover-text-decoration-color: rgba(76, 175, 80, calc(0.7 + 0.3 * var(--del-hover-effect) * var(--use-dynamic-effect)));
+    --mark-bg-color: #aee6c3;
+    --mark-hover-bg-color: rgba(174, 230, 195, calc(1 - 0.5 * var(--mark-hover-effect) * var(--use-dynamic-effect)));
+
+    /* —— 链接 —— */
+    --a-color: #0c8f94;
+    --a-hover-color: #02502a;
+
+    /* —— 代码块容器 —— */
+    --code-fences-color: #2f4f4f;
+    --code-fences-bg-color: #ffffff;
+    --code-fences-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    --code-fences-before-bg: #015e19;
+    --code-fences-before-box-shadow: 20px 0 #068f28, 40px 0 rgb(116, 219, 38);
+    --code-fences-3circle-1: #fc625d;
+    --code-fences-3circle-2: #fdbc40;
+    --code-fences-3circle-3: #34c759;
+
+    /* —— 滚动条 —— */
+    --scrollbar-track-bg: #fafafa;
+    --scrollbar-thumb-bg: linear-gradient(to top right, #4aad23, #1b5b3e);
+
+    /* —— UI：侧栏 / 菜单 / 大纲 —— */
+    --sidebar-bg-color: #2f845e;
+    --sidebar-content-file-list-item-border-color: #eee;
+    --sidebar-content-file-list-item-active-bg-color: rgba(66, 185, 131, 0.1);
+    --sidebar-content-file-list-item-active-border-color: #2f845e;
+    --outline-item-hover-bg-color: #e8f4ee;
+    --sidebar-footer-border-color: #eee;
+    --sidebar-footer-hover-bg-color: #caebdb;
+    --dropdown-menu-border-color: #eee;
+    --dropdown-menu-li-a-color: #282c34;
+    --dropdown-menu-li-a-hover-color: #e8f4ee;
+    --toc-bg-color: #fff;
+    --toc-hover-bg-color: #caebdb;
+    --auto-suggest-container-bg-color: #d4eee1;
+}
+
+
+/* ===========================================================================
+   §2  Obsidian 变量映射
+   =========================================================================== */
+body {
+    /* —— 排版 —— */
+    --font-text-size: 17px;
+    --line-height-normal: 1.9;
+    --line-height-tight: 1.3;
+
+    /* —— 文本 —— */
+    --text-normal: var(--body-text-color);
+    --text-muted: #6a737d;
+    --text-faint: #999;
+    --text-accent: var(--a-color);
+    --text-accent-hover: var(--a-hover-color);
+    --text-selection: var(--selection-color);
+    --text-highlight-bg: var(--mark-bg-color);
+    --text-on-accent: #fff;
+
+    /* —— 背景 —— */
+    --background-primary: var(--content-write-bg-color);
+    --background-primary-alt: #f5f6f7;
+    --background-secondary: #fafafa;
+    --background-secondary-alt: #f0f0f0;
+    --background-modifier-border: var(--table-border-color);
+    --background-modifier-border-hover: #c4dccf;
+    --background-modifier-border-focus: var(--sidebar-bg-color);
+    --background-modifier-hover: rgba(66, 185, 131, 0.10);
+    --background-modifier-active-hover: rgba(66, 185, 131, 0.18);
+    --background-modifier-form-field: #fff;
+    --background-modifier-error: var(--alert-caution-border-color);
+
+    /* —— 交互 —— */
+    --interactive-normal: #fafafa;
+    --interactive-hover: var(--outline-item-hover-bg-color);
+    --interactive-accent: var(--sidebar-bg-color);
+    --interactive-accent-hover: #256d4a;
+    --interactive-accent-rgb: 47, 132, 94;
+
+    /* —— 链接 —— */
+    --link-color: var(--a-color);
+    --link-color-hover: var(--a-hover-color);
+    --link-external-color: var(--a-color);
+    --link-external-color-hover: var(--a-hover-color);
+    --link-unresolved-color: var(--alert-caution-border-color);
+
+    /* —— 代码 —— */
+    --code-background: var(--code-fences-bg-color);
+    --code-normal: var(--code-fences-color);
+    --code-size: 1rem;
+
+    /* —— 标题（!important 防止第三方主题覆盖） —— */
+    --h1-size: 2rem !important;
+    --h1-weight: 700 !important;
+    --h2-size: 1.8rem !important;
+    --h2-weight: 700 !important;
+    --h3-size: 1.6rem !important;
+    --h3-weight: 700 !important;
+    --h4-size: 1.4rem !important;
+    --h4-weight: 700 !important;
+    --h5-size: 1.2rem !important;
+    --h5-weight: 700 !important;
+    --h6-size: 1rem !important;
+    --h6-weight: 700 !important;
+
+    /* —— 表格 —— */
+    --table-header-background: var(--table-thead-bg-color);
+    --table-header-color: var(--table-thead-text-color);
+    --table-row-alt-background: #f9fbfa;
+    --table-row-background-hover: var(--table-td-hover-bg);
+
+    /* —— 布局 —— */
+    --file-line-width: 1200px;
+    --radius-s: 7px;
+    --radius-m: 10px;
+    --radius-l: 12px;
+}
+
+@media only screen and (min-width: 1400px) {
+    body {
+        --file-line-width: 1024px;
+    }
+}
+
+@media only screen and (min-width: 1800px) {
+    body {
+        --file-line-width: 1200px;
+    }
+}
+
+
+/* ===========================================================================
+   §3  全局样式
+   =========================================================================== */
+
+/* —— 全局滚动条 —— */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-track-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb-bg);
+    border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #246a4b;
+}
+
+
+/* ===========================================================================
+   §4  阅读模式
+   =========================================================================== */
+
+/* —— 内容容器 —— */
+.markdown-reading-view,
+.markdown-preview-view.markdown-rendered,
+.markdown-preview-view {
+    background-color: var(--content-write-bg-color);
+}
+
+.markdown-preview-view .markdown-preview-sizer {
+    padding-bottom: 7.5rem;
+}
+
+/* —— 段落 —— */
+.markdown-rendered p {
+    margin: 3px 0;
+    padding: 0 0.3rem;
+    font-size: 1rem;
+    line-height: 1.9rem;
+    text-align: var(--text-align);
+    word-spacing: 0.1rem;
+    transition: background-color 0.25s ease;
+}
+
+.markdown-rendered p:not(:has(img)):hover {
+    background-color: var(--p-hover-bg-color);
+}
+
+/* —— 标题 —— */
+.markdown-rendered :is(h1, h2, h3) {
+    font-style: normal;
+}
+
+.markdown-rendered :is(h1, h2) {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.markdown-rendered h1 {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    font-size: 2rem;
+    transition: transform 0.4s ease;
+}
+
+.markdown-rendered h1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: var(--write-h1-before-bg);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s ease;
+}
+
+.markdown-rendered h1:hover {
+    transform: scale(calc(1 + 0.1 * var(--h1-hover-effect) * var(--use-dynamic-effect)));
+}
+
+.markdown-rendered h1:hover::before {
+    transform: scaleX(calc(var(--h1-hover-effect) * var(--use-dynamic-effect)));
+}
+
+.markdown-rendered h2 {
+    position: relative;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.markdown-rendered h2::after {
+    content: "";
+    display: block;
+    width: 30rem;
+    max-width: 100%;
+    height: 2.5px;
+    margin: 0.5rem auto 0.3rem;
+    background: var(--write-h2-after-bg);
+    border-radius: 10px;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.markdown-rendered h2:hover::after {
+    transform: scaleX(calc(1 * var(--h2-after-effect) * var(--use-dynamic-effect)));
+}
+
+.markdown-rendered h3 {
+    font-size: 1.6rem;
+}
+
+.markdown-rendered h4 {
+    font-size: 1.4rem;
+}
+
+.markdown-rendered h5 {
+    font-size: 1.2rem;
+}
+
+.markdown-rendered h6 {
+    font-size: 1rem;
+}
+
+.markdown-rendered :is(h3, h4, h5, h6) {
+    position: relative;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.markdown-rendered :is(h3, h4, h5, h6):hover {
+    transform: scale(calc(1 + 0.01 * var(--h3-6-hover-effect) * var(--use-dynamic-effect)));
+}
+
+.markdown-rendered :is(h1, h2, h3, h4, h5, h6) code {
+    font-size: inherit;
+}
+
+/* —— 图片 —— */
+.markdown-rendered img,
+.markdown-source-view.mod-cm6 .cm-content img {
+    display: block;
+    max-width: 100%;
+    margin: 1em auto;
+    border-radius: 10px;
+    transition: transform 0.15s ease, border-radius 0.15s ease;
+}
+
+.markdown-rendered img:hover,
+.markdown-source-view.mod-cm6 .cm-content img:hover {
+    border-radius: calc(10px - 10px * var(--img-hover-effect) * var(--use-dynamic-effect));
+    transform: scale(calc(1 + 0.01 * var(--img-hover-effect) * var(--use-dynamic-effect)));
+}
+
+/* —— 引用块 —— */
+.markdown-rendered blockquote {
+    margin: 0.6rem 0;
+    padding: 0.5rem 1rem;
+    background-color: var(--blockquote-bg-color);
+    border-left: 8px solid var(--blockquote-border-color);
+    border-radius: 7px;
+    transition: box-shadow 0.3s ease, border-radius 0.3s ease, border-left 0.3s ease;
+}
+
+.markdown-rendered blockquote p {
+    margin: 0.1rem 0;
+}
+
+.markdown-rendered blockquote:hover {
+    border-left: calc(8px + 1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) solid var(--blockquote-hover-border-color);
+    border-radius: calc(7px + 8px * var(--blockquote-hover-effect) * var(--use-dynamic-effect));
+    box-shadow:
+        calc(1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) calc(1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--blockquote-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.1 * var(--blockquote-hover-effect) * var(--use-dynamic-effect)));
+}
+
+.markdown-rendered blockquote thead {
+    background-color: var(--blockquote-thead-bg-color);
+    color: var(--blockquote-thead-text-color);
+}
+
+.markdown-rendered blockquote td {
+    background-color: var(--blockquote-td-bg-color);
+}
+
+.markdown-rendered blockquote td:hover {
+    background: var(--blockquote-td-hover-bg);
+}
+
+.markdown-rendered blockquote code {
+    background-color: var(--alert-code-bg-color);
+}
+
+/* —— 分割线 —— */
+.markdown-rendered hr {
+    position: relative;
+    overflow: visible;
+    height: 1.5px;
+    margin: 2rem auto;
+    background-image: var(--hr-bg-image);
+    background-size: 200% 100%;
+    background-position: 0 0;
+    border: none;
+    border-radius: 5px;
+    box-shadow: var(--hr-box-shadow);
+    opacity: 0.8;
+    transition: transform 0.3s ease, background-position 0.3s ease, height 0.3s ease;
+}
+
+.markdown-rendered hr:hover {
+    height: calc(1.5px + 1px * var(--hr-hover-effect) * var(--use-dynamic-effect));
+    background-position: calc(100% * var(--hr-hover-effect) * var(--use-dynamic-effect)) 0;
+    transform: scale(calc(1 + 0.02 * var(--hr-hover-effect) * var(--use-dynamic-effect)));
+}
+
+/* —— 表格 —— */
+.markdown-rendered table {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--table-border-color);
+    border-radius: 10px;
+    border-collapse: separate;
+}
+
+.markdown-rendered table :is(th, td) {
+    padding: 10px 16px;
+    border: 0.5px solid var(--table-border-color);
+    transition: background 0.3s ease;
+}
+
+.markdown-rendered table th {
+    background-color: var(--table-thead-bg-color);
+    color: var(--table-thead-text-color);
+    border-top: 0;
+    border-bottom: 1px solid var(--table-border-color);
+}
+
+.markdown-rendered table thead {
+    background-color: var(--table-thead-bg-color);
+}
+
+.markdown-rendered table td:hover {
+    background: var(--table-td-hover-bg);
+}
+
+.markdown-rendered table tbody+tbody {
+    border-top: 2px solid var(--table-tbody-border-color);
+}
+
+/* —— 列表 —— */
+.markdown-rendered ul>li::marker {
+    font-size: 1.6rem;
+    color: var(--ul-marker-color);
+    list-style-type: disc;
+    transition: transform 0.3s;
+}
+
+.markdown-rendered ul ul>li::marker {
+    color: var(--ulul-marker-color);
+    font-weight: bold;
+    list-style-type: circle;
+}
+
+.markdown-rendered ul ul ul>li::marker {
+    color: var(--ululul-marker-color);
+    list-style-type: square;
+}
+
+.markdown-rendered ol>li::marker {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1rem;
+    font-style: italic;
+    transition: font-weight 0.2s ease, font-style 0.2s ease, color 0.2s ease, font-size 0.2s ease;
+}
+
+.markdown-rendered ol>li:hover::marker {
+    font-style: var(--list-ol-text-style);
+    font-weight: calc(500 + 100 * var(--list-marker-effect) * var(--use-dynamic-effect));
+    font-size: calc(20px + 3px * var(--list-marker-effect) * var(--use-dynamic-effect));
+    color: var(--ol-hover-marker-color);
+}
+
+.markdown-rendered :is(ul, ol) {
+    margin: 0;
+}
+
+.markdown-rendered ol>li {
+    padding-left: 0.3rem;
+}
+
+/* —— 任务列表 —— */
+.markdown-rendered .task-list-item input[type="checkbox"] {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    background: var(--task-list-bg-color);
+    border: 1px solid var(--task-list-border-color);
+    border-radius: 50%;
+    vertical-align: middle;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: background-color 200ms ease-in-out;
+}
+
+.markdown-rendered .task-list-item input[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 1.5px;
+    width: 0.6rem;
+    height: 0.3rem;
+    border: 2px solid var(--task-list-input-after-border-color);
+    border-top: 0;
+    border-right: 0;
+    transform: rotate(-45deg);
+    opacity: 0;
+    transition: opacity 200ms ease-in-out;
+}
+
+.markdown-rendered .task-list-item input[type="checkbox"]:checked {
+    background-color: var(--task-list-input-checked-bg-color);
+    border-color: transparent;
+}
+
+.markdown-rendered .task-list-item input[type="checkbox"]:checked::after {
+    opacity: 1;
+}
+
+.markdown-rendered .task-list-item.is-checked,
+.markdown-rendered li[data-task="x"] {
+    color: var(--task-list-done-color);
+    text-decoration: line-through;
+}
+
+/* —— Front matter —— */
+.markdown-rendered .frontmatter,
+.markdown-rendered pre.frontmatter {
+    margin-top: -1rem;
+    margin-bottom: 2rem;
+    padding: 0.5rem 1.5rem;
+    background: var(--table-meta-block-bg-color);
+    color: var(--table-meta-block-color);
+    border: 0;
+    border-radius: 6px;
+}
+
+.markdown-rendered .footnotes {
+    font-size: 1rem;
+}
+
+/* —— 内联代码 —— */
+.markdown-rendered code:not(pre code) {
+    margin: 0 2px;
+    padding: 3px 5px 1px;
+    background-color: var(--code-bg-color);
+    color: var(--code-color);
+    font-family: var(--font-monospace);
+    font-size: 0.95rem;
+    font-weight: 550;
+    border-radius: 7px;
+    transition: all 0.3s ease;
+}
+
+.markdown-rendered code:not(pre code):hover {
+    padding: 3px 5px calc(1px + 2px * var(--code-hover-effect) * var(--use-dynamic-effect));
+    background-color: var(--code-hover-bg-color);
+    font-weight: calc(550 + 150 * var(--code-hover-effect) * var(--use-dynamic-effect));
+}
+
+/* —— 粗体 / 斜体 / 下划线 / 删除线 / 高亮 / 链接 —— */
+.markdown-rendered strong {
+    margin: 0 2px;
+    color: var(--strong-color);
+    font-size: 1.05rem;
+    font-weight: bold;
+    transition: font-size 0.3s ease, padding 0.3s ease;
+}
+
+.markdown-rendered strong:hover {
+    padding: calc(3px * var(--strong-hover-effect) * var(--use-dynamic-effect));
+    font-size: calc(1.05rem + 0.05rem * var(--strong-hover-effect) * var(--use-dynamic-effect));
+}
+
+.markdown-rendered em {
+    padding: 0 1px;
+    color: var(--em-color);
+    transition: all 0.3s ease;
+}
+
+.markdown-rendered em:hover {
+    padding: 0 calc(1px + 2px * var(--em-hover-effect) * var(--use-dynamic-effect));
+    color: var(--em-hover-color);
+    font-weight: calc(500 + 100 * var(--em-hover-effect) * var(--use-dynamic-effect));
+}
+
+.markdown-rendered u {
+    padding-bottom: 2.5px;
+    border-bottom: 2px solid var(--u-border-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.markdown-rendered u:hover {
+    margin: calc(4px * var(--u-hover-effect) * var(--use-dynamic-effect));
+    padding: calc(4px * var(--u-hover-effect) * var(--use-dynamic-effect));
+    padding-bottom: 2.5px;
+    border: calc(2px * var(--u-hover-effect) * var(--use-dynamic-effect)) solid var(--u-border-color);
+    border-bottom: 2px solid var(--u-border-color);
+    border-radius: calc(7px * var(--u-hover-effect) * var(--use-dynamic-effect));
+}
+
+.markdown-rendered del {
+    color: var(--del-color);
+    text-decoration: line-through;
+    text-decoration-color: var(--del-text-decoration-color);
+    text-decoration-thickness: 1.5px;
+    font-style: italic;
+    opacity: 0.8;
+    transition: color 0.3s ease, opacity 0.3s ease, text-decoration-color 0.3s ease;
+}
+
+.markdown-rendered del:hover {
+    color: var(--del-hover-color);
+    text-decoration-color: var(--del-hover-text-decoration-color);
+    opacity: calc(0.8 + 0.2 * var(--del-hover-effect) * var(--use-dynamic-effect));
+}
+
+.markdown-rendered mark {
+    margin: 0 2px;
+    padding: 3px 3px 2.5px;
+    background-color: var(--mark-bg-color);
+    color: inherit;
+    font-weight: 500;
+    border-radius: 0;
+    transition: all 0.3s ease;
+}
+
+.markdown-rendered mark:hover {
+    padding: 3px 3px calc(2.5px + 1.5px * var(--mark-hover-effect) * var(--use-dynamic-effect));
+    background-color: var(--mark-hover-bg-color);
+    border-radius: calc(7px * var(--mark-hover-effect) * var(--use-dynamic-effect));
+}
+
+.markdown-rendered :is(a, a.internal-link, a.external-link) {
+    background-color: inherit;
+    color: var(--a-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.markdown-rendered :is(a, a.internal-link, a.external-link):hover {
+    color: var(--a-hover-color);
+    text-decoration: underline;
+}
+
+.markdown-rendered a img {
+    border: none;
+}
+
+.markdown-rendered a.external-link::after {
+    content: "\2197";
+    margin-left: 2px;
+    color: var(--a-color);
+    font-size: 0.75em;
+    vertical-align: super;
+    opacity: 0.7;
+}
+
+/* —— 阅读模式代码块容器 —— */
+.markdown-rendered pre {
+    position: relative;
+    overflow-x: auto;
+    padding: 32px 17px 17px;
+    background-color: var(--code-fences-bg-color);
+    color: var(--code-fences-color);
+    font-family: var(--font-monospace);
+    border-radius: 10px;
+    box-shadow: var(--code-fences-box-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.markdown-rendered pre>code,
+.markdown-rendered pre code {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 0.95rem;
+    border-radius: 0;
+}
+
+.markdown-rendered pre::before {
+    content: " ";
+    position: absolute;
+    top: 12px;
+    left: 13px;
+    width: 12px;
+    height: 12px;
+    background: var(--code-fences-before-bg);
+    border-radius: 50%;
+    box-shadow: var(--code-fences-before-box-shadow);
+    transition: all 0.3s ease;
+}
+
+.markdown-rendered pre:hover::before {
+    background: var(--code-fences-3circle-1);
+    box-shadow: 20px 0 var(--code-fences-3circle-2), 40px 0 var(--code-fences-3circle-3);
+}
+
+.markdown-rendered pre> :is(.copy-code-button, button.copy-code-button) {
+    top: 8px;
+    right: 12px;
+    background-color: transparent;
+    border: none;
+}
+
+
+/* ===========================================================================
+   §5  编辑模式（Live Preview）
+   =========================================================================== */
+.markdown-source-view.mod-cm6 .cm-scroller {
+    background-color: var(--content-write-bg-color);
+    font-family: var(--font-text);
+}
+
+.markdown-source-view.mod-cm6 .cm-sizer {
+    max-width: var(--file-line-width);
+    padding-bottom: 7.5rem;
+}
+
+.markdown-source-view.mod-cm6 .cm-content {
+    caret-color: var(--text-normal);
+}
+
+.markdown-source-view.mod-cm6 .cm-line {
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    font-size: 1rem;
+    line-height: 1.9;
+}
+
+/* —— 段落 hover（排除特殊行） —— */
+.markdown-source-view.mod-cm6.is-live-preview .cm-line:not(.HyperMD-header):not(.HyperMD-quote):not(.HyperMD-codeblock):not(.HyperMD-list-line):not(.HyperMD-hr):not(.HyperMD-frontmatter):not(.HyperMD-table-row):hover {
+    background-color: var(--p-hover-bg-color);
+    border-radius: 3px;
+    transition: background-color 0.25s ease;
+}
+
+/* —— 标题：行容器提供间距与动效；内层 .cm-header-N 提供字号 —— */
+.cm-line.HyperMD-header-1,
+.cm-line.HyperMD-header-2 {
+    text-align: center;
+}
+
+.cm-line.HyperMD-header-1 {
+    position: relative;
+    z-index: 0;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+    transition: transform 0.4s ease;
+}
+
+.cm-line.HyperMD-header-1::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background: var(--write-h1-before-bg);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.4s ease;
+    pointer-events: none;
+}
+
+.cm-line.HyperMD-header-1:hover {
+    transform: scale(calc(1 + 0.1 * var(--h1-hover-effect) * var(--use-dynamic-effect)));
+}
+
+.cm-line.HyperMD-header-1:hover::before {
+    transform: scaleX(calc(var(--h1-hover-effect) * var(--use-dynamic-effect)));
+}
+
+.cm-line.HyperMD-header-2 {
+    position: relative;
+    padding-top: 1.5rem;
+    padding-bottom: 0.6rem;
+    font-weight: 700;
+    transition: transform 0.4s ease;
+}
+
+.cm-line.HyperMD-header-2::after {
+    content: "";
+    display: block;
+    width: 30rem;
+    max-width: 100%;
+    height: 2.5px;
+    margin: 0.3rem auto 0;
+    background: var(--write-h2-after-bg);
+    border-radius: 10px;
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+}
+
+.cm-line.HyperMD-header-2:hover::after {
+    transform: scaleX(calc(1 * var(--h2-after-effect) * var(--use-dynamic-effect)));
+}
+
+.cm-line.HyperMD-header-3,
+.cm-line.HyperMD-header-4,
+.cm-line.HyperMD-header-5,
+.cm-line.HyperMD-header-6 {
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+/* —— 标题字号（!important 防止第三方主题覆盖） —— */
+.markdown-source-view.mod-cm6 .cm-header-1 {
+    font-size: 2rem !important;
+    font-weight: 700;
+}
+
+.markdown-source-view.mod-cm6 .cm-header-2 {
+    font-size: 1.8rem !important;
+    font-weight: 700;
+}
+
+.markdown-source-view.mod-cm6 .cm-header-3 {
+    font-size: 1.6rem !important;
+    font-weight: 700;
+}
+
+.markdown-source-view.mod-cm6 .cm-header-4 {
+    font-size: 1.4rem !important;
+    font-weight: 700;
+}
+
+.markdown-source-view.mod-cm6 .cm-header-5 {
+    font-size: 1.2rem !important;
+    font-weight: 700;
+}
+
+.markdown-source-view.mod-cm6 .cm-header-6 {
+    font-size: 1rem !important;
+    font-weight: 700;
+}
+
+/* —— 引用块：左边框宽度锁死 8px，避免 hover 时抖动 —— */
+.cm-line.HyperMD-quote,
+.HyperMD-quote {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: var(--blockquote-bg-color) !important;
+    border-left: 8px solid var(--blockquote-border-color);
+    transition: box-shadow 0.3s ease;
+}
+
+.cm-line.HyperMD-quote.HyperMD-quote-1 {
+    padding-top: 0.4rem;
+}
+
+.cm-line.HyperMD-quote.HyperMD-quote-1:has(+ .cm-line:not(.HyperMD-quote)) {
+    padding-bottom: 0.4rem;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.cm-line.HyperMD-quote:not(.HyperMD-quote + .HyperMD-quote) {
+    padding-top: 0.4rem;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.cm-line.HyperMD-quote .cm-quote {
+    color: inherit;
+    font-style: normal;
+}
+
+/* —— 列表 bullet —— */
+.markdown-source-view.mod-cm6 .list-bullet::after {
+    width: 6px;
+    height: 6px;
+    background-color: var(--ul-marker-color);
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-list-line-2 .list-bullet::after {
+    box-sizing: border-box;
+    width: 6px;
+    height: 6px;
+    background: transparent;
+    border: 1.5px solid var(--ulul-marker-color);
+    border-radius: 50%;
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-list-line-3 .list-bullet::after {
+    width: 6px;
+    height: 6px;
+    background-color: var(--ululul-marker-color);
+    border-radius: 0;
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-list-line:hover .list-bullet::after {
+    animation: bounce 0.6s ease-in-out;
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(calc(1 + 0.3 * var(--list-marker-effect) * var(--use-dynamic-effect)));
+    }
+}
+
+.markdown-source-view.mod-cm6 .HyperMD-list-line .cm-formatting-list-ol:hover {
+    color: var(--ol-hover-marker-color);
+    font-style: var(--list-ol-text-style);
+    font-weight: calc(500 + 100 * var(--list-marker-effect) * var(--use-dynamic-effect));
+    transition: all 0.2s ease;
+}
+
+/* —— 内联代码 —— */
+.cm-s-obsidian .cm-inline-code:not(.cm-formatting) {
+    margin: 0 2px;
+    padding: 3px 5px 1px;
+    background-color: var(--code-bg-color);
+    color: var(--code-color);
+    font-family: var(--font-monospace);
+    font-weight: 550;
+    border-radius: 7px;
+    transition: all 0.3s ease;
+}
+
+.cm-s-obsidian .cm-inline-code:not(.cm-formatting):hover {
+    background-color: var(--code-hover-bg-color);
+    font-weight: calc(550 + 150 * var(--code-hover-effect) * var(--use-dynamic-effect));
+}
+
+/* —— 粗体 / 斜体 / 高亮 / 删除线 —— */
+.cm-s-obsidian .cm-strong {
+    margin: 0 2px;
+    color: var(--strong-color);
+    font-size: 1.05rem;
+    font-weight: bold;
+}
+
+.cm-s-obsidian .cm-em {
+    color: var(--em-color);
+}
+
+.cm-s-obsidian .cm-em:hover {
+    color: var(--em-hover-color);
+}
+
+.cm-s-obsidian .cm-highlight {
+    padding: 1px 2px;
+    background-color: var(--mark-bg-color);
+    border-radius: 3px;
+}
+
+.cm-s-obsidian .cm-highlight:hover {
+    background-color: var(--mark-hover-bg-color);
+}
+
+.cm-s-obsidian .cm-strikethrough {
+    color: var(--del-color);
+    text-decoration-color: var(--del-text-decoration-color);
+    text-decoration-thickness: 1.5px;
+    font-style: italic;
+}
+
+/* —— 链接 —— */
+.cm-s-obsidian :is(.cm-link, .cm-hmd-internal-link, .cm-url) {
+    color: var(--a-color);
+    text-decoration: none;
+}
+
+.cm-s-obsidian :is(.cm-link, .cm-hmd-internal-link):hover {
+    color: var(--a-hover-color);
+    text-decoration: underline;
+}
+
+.cm-s-obsidian .cm-url.cm-string {
+    color: var(--a-color);
+    opacity: 0.7;
+}
+
+/* —— 分割线 —— */
+
+
+/* 2. 核心：绝对统一所有 hr 和 .cm-hr 的尺寸和样式（不管点不点，都是同一个模样） */
+.markdown-source-view.mod-cm6 .cm-content hr,
+.markdown-source-view.mod-cm6 .cm-content .cm-hr {
+    display: block !important;
+    box-sizing: border-box !important;
+
+    /* ⭐️ 关键修复：强制短一点，并居中！左右各留1.5rem，绝对穿不透引用块边框 */
+    width: calc(100% - 3rem) !important;
+    margin: 1.5rem auto !important;
+    padding: 0 !important;
+    height: 3px !important;
+
+    /* 彻底斩断原生的边框、底色和阴影 */
+    border: none !important;
+    outline: none !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+
+    /* 赋予渐变绿线 */
+    background-image: var(--hr-bg-image) !important;
+    background-size: 200% 100% !important;
+    background-position: 0 0 !important;
+    border-radius: 5px !important;
+    opacity: 1 !important;
+
+    /* 隐藏可能存在的残留文本或节点 */
+    color: transparent !important;
+    font-size: 0 !important;
+    transition: transform 0.3s ease, background-position 0.3s ease, opacity 0.3s ease !important;
+}
+
+/* 3. 隐藏引用块激活时出现的 `>` 标记（防止它把线条挤歪） */
+.markdown-source-view.mod-cm6 .cm-line:has(hr) .cm-formatting-quote,
+.markdown-source-view.mod-cm6 .cm-line:has(.cm-hr) .cm-formatting-quote {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* 4. 清除原生伪元素，防止出现幽灵细线 */
+.markdown-source-view.mod-cm6 .cm-content hr::before,
+.markdown-source-view.mod-cm6 .cm-content hr::after,
+.markdown-source-view.mod-cm6 .cm-content .cm-hr::before,
+.markdown-source-view.mod-cm6 .cm-content .cm-hr::after {
+    display: none !important;
+    content: none !important;
+    border: none !important;
+}
+
+/* 5. Hover 动效：不改变宽度和边距，仅纵向拉伸，彻底告别布局抖动 */
+.markdown-source-view.mod-cm6 .cm-content hr:hover,
+.markdown-source-view.mod-cm6 .cm-content .cm-hr:hover {
+    transform: scaleY(1.5) !important;
+    background-position: calc(100% * var(--hr-hover-effect) * var(--use-dynamic-effect)) 0 !important;
+    opacity: 1 !important;
+}
+
+/* —— 表格 widget —— */
+.cm-s-obsidian :is(.cm-table-widget, .cm-embed-block .cm-table-widget) table {
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--table-border-color);
+    border-radius: 10px;
+    border-collapse: separate;
+}
+
+.cm-s-obsidian .cm-table-widget :is(th, td) {
+    padding: 10px 16px;
+    border: 0.5px solid var(--table-border-color);
+    transition: background 0.3s ease;
+}
+
+.cm-s-obsidian .cm-table-widget th {
+    background-color: var(--table-thead-bg-color);
+    color: var(--table-thead-text-color);
+}
+
+.cm-s-obsidian .cm-table-widget td:hover {
+    background: var(--table-td-hover-bg);
+}
+
+/* —— Front matter —— */
+.cm-line.HyperMD-frontmatter,
+.cm-hmd-frontmatter {
+    background: var(--table-meta-block-bg-color) !important;
+    color: var(--table-meta-block-color);
+    font-family: var(--font-monospace);
+    font-size: 0.9rem;
+}
+
+.cm-line.HyperMD-frontmatter.cm-line:first-child,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-frontmatter:first-child {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.cm-line.HyperMD-frontmatter:has(+ .cm-line:not(.HyperMD-frontmatter)) {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.cm-hmd-frontmatter.cm-atom {
+    color: var(--table-meta-block-color);
+}
+
+.cm-hmd-frontmatter.cm-string {
+    color: var(--code-color);
+}
+
+/* —— 任务列表 —— */
+.cm-s-obsidian :is(.HyperMD-task-line[data-task="x"], .HyperMD-task-line[data-task="X"]) {
+    color: var(--task-list-done-color);
+    text-decoration: line-through;
+}
+
+.cm-s-obsidian .cm-formatting-task {
+    color: var(--task-list-input-checked-bg-color);
+    font-weight: bold;
+}
+
+
+/* ===========================================================================
+   §6  Callout
+   =========================================================================== */
+.callout {
+    --callout-blend-mode: normal;
+    --callout-border-width: 8px;
+    --callout-border-opacity: 1;
+    --callout-radius: 7px;
+    --callout-padding: 0.5rem 1rem;
+    --callout-title-padding: 0;
+    --callout-content-padding: 0.1rem 0;
+    transition: box-shadow 0.3s ease, border-radius 0.3s ease, border-left 0.3s ease;
+}
+
+.callout .callout-title-inner {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.callout .callout-content p {
+    margin: 0.1rem 0;
+}
+
+.callout:hover {
+    border-left-width: calc(8px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect));
+    border-radius: calc(7px + 8px * var(--alert-hover-effect) * var(--use-dynamic-effect));
+    box-shadow:
+        calc(1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) calc(1px + 1px * var(--alert-hover-effect) * var(--use-dynamic-effect)) rgba(0, 0, 0, calc(0.1 * var(--alert-hover-effect) * var(--use-dynamic-effect)));
+}
+
+/* —— tip —— */
+.callout[data-callout="tip"] {
+    --callout-color: 31, 136, 61;
+    --callout-icon: lucide-lightbulb;
+    background-color: var(--alert-tip-bg-color);
+    border-left: 8px solid var(--alert-tip-border-color);
+}
+
+.callout[data-callout="tip"]:hover {
+    border-left-color: var(--alert-tip-hover-border-color);
+}
+
+.callout[data-callout="tip"] thead {
+    background-color: var(--alert-tip-thead-bg-color);
+    color: var(--alert-tip-thead-text-color);
+}
+
+.callout[data-callout="tip"] td:hover {
+    background: var(--alert-tip-td-hover-bg);
+}
+
+/* —— caution / danger / error —— */
+.callout[data-callout="caution"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"] {
+    --callout-color: 207, 34, 46;
+    --callout-icon: lucide-alert-circle;
+    background-color: var(--alert-caution-bg-color);
+    border-left: 8px solid var(--alert-caution-border-color);
+}
+
+.callout[data-callout="caution"]:hover {
+    border-left-color: var(--alert-caution-hover-border-color);
+}
+
+.callout[data-callout="caution"] p:hover {
+    background-color: var(--alert-caution-hover-bg-color);
+}
+
+.callout[data-callout="caution"] :is(strong, em, code, a) {
+    color: var(--alert-caution-text-color);
+}
+
+.callout[data-callout="caution"] thead {
+    background-color: var(--alert-caution-thead-bg-color);
+    color: var(--alert-caution-thead-text-color);
+}
+
+.callout[data-callout="caution"] td:hover {
+    background-color: var(--alert-caution-td-hover-bg-color);
+}
+
+.callout[data-callout="caution"] :is(ul, ol) li::marker {
+    color: var(--alert-caution-list-item-marker-color);
+}
+
+/* —— warning —— */
+.callout[data-callout="warning"] {
+    --callout-color: 154, 103, 0;
+    --callout-icon: lucide-alert-triangle;
+    background-color: var(--alert-warning-bg-color);
+    border-left: 8px solid var(--alert-warning-border-color);
+}
+
+.callout[data-callout="warning"]:hover {
+    border-left-color: var(--alert-warning-hover-border-color);
+}
+
+.callout[data-callout="warning"] p:hover {
+    background-color: var(--alert-warning-hover-bg-color);
+}
+
+.callout[data-callout="warning"] :is(strong, em, code, a) {
+    color: var(--alert-warning-text-color);
+}
+
+.callout[data-callout="warning"] thead {
+    background-color: var(--alert-warning-thead-bg-color);
+    color: var(--alert-warning-thead-text-color);
+}
+
+.callout[data-callout="warning"] td:hover {
+    background: var(--alert-warning-td-hover-bg);
+}
+
+.callout[data-callout="warning"] :is(ul, ol) li::marker {
+    color: var(--alert-warning-list-item-marker-color);
+}
+
+/* —— important / info / abstract —— */
+.callout[data-callout="important"],
+.callout[data-callout="info"],
+.callout[data-callout="abstract"] {
+    --callout-color: 130, 80, 223;
+    --callout-icon: lucide-flame;
+    background-color: var(--alert-important-bg-color);
+    border-left: 8px solid var(--alert-important-border-color);
+}
+
+.callout[data-callout="important"]:hover {
+    border-left-color: var(--alert-important-hover-border-color);
+}
+
+.callout[data-callout="important"] p:hover {
+    background-color: var(--alert-important-hover-bg-color);
+}
+
+.callout[data-callout="important"] :is(strong, em, code, a) {
+    color: var(--alert-important-text-color);
+}
+
+.callout[data-callout="important"] thead {
+    background-color: var(--alert-important-thead-bg-color);
+    color: var(--alert-important-thead-text-color);
+}
+
+.callout[data-callout="important"] td:hover {
+    background: var(--alert-important-td-hover-bg);
+}
+
+.callout[data-callout="important"] :is(ul, ol) li::marker {
+    color: var(--alert-important-list-item-marker-color);
+}
+
+/* —— note / quote —— */
+.callout[data-callout="note"],
+.callout[data-callout="quote"] {
+    --callout-color: 9, 105, 218;
+    --callout-icon: lucide-pencil;
+    background-color: var(--alert-note-bg-color);
+    border-left: 8px solid var(--alert-note-border-color);
+}
+
+.callout[data-callout="note"]:hover {
+    border-left-color: var(--alert-note-hover-border-color);
+}
+
+.callout[data-callout="note"] p:hover {
+    background-color: var(--alert-note-hover-bg-color);
+}
+
+.callout[data-callout="note"] :is(strong, em, code, a) {
+    color: var(--alert-note-text-color);
+}
+
+.callout[data-callout="note"] thead {
+    background-color: var(--alert-note-thead-bg-color);
+    color: var(--alert-note-thead-text-color);
+}
+
+.callout[data-callout="note"] td:hover {
+    background: var(--alert-note-td-hover-bg);
+}
+
+.callout[data-callout="note"] :is(ul, ol) li::marker {
+    color: var(--alert-note-list-item-marker-color);
+}
+
+/* —— 通用内嵌元素 —— */
+.callout td {
+    background-color: var(--alert-td-bg-color);
+}
+
+.callout code:not(pre code) {
+    background-color: var(--alert-code-bg-color);
+}
+
+.callout pre {
+    padding-top: 32px;
+}
+
+.markdown-source-view.mod-cm6 .cm-callout .callout {
+    margin: 6px 0;
+}
+
+
+/* ===========================================================================
+   §7  代码块：语法高亮 + 容器
+   =========================================================================== */
+
+/* —— 阅读模式（hljs） —— */
+.markdown-rendered .hljs-keyword {
+    color: #222fa7;
+    font-weight: bold;
+}
+
+.markdown-rendered .hljs-built_in {
+    color: #006400;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.markdown-rendered .hljs-operator {
+    color: #006400;
+}
+
+.markdown-rendered :is(.hljs-variable, .hljs-variable.language_) {
+    color: #239d37;
+    font-weight: bold;
+}
+
+.markdown-rendered .hljs-params {
+    color: #108979;
+}
+
+.markdown-rendered .hljs-title.class_ {
+    color: #183da2;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.markdown-rendered :is(.hljs-literal, .hljs-number) {
+    color: #3e19cf;
+}
+
+.markdown-rendered .hljs-title.function_ {
+    color: #10623e;
+    font-weight: bold;
+}
+
+.markdown-rendered .hljs-string {
+    color: #0264bf;
+    font-style: italic;
+}
+
+.markdown-rendered .hljs-comment {
+    color: #6a737d;
+    font-style: italic;
+}
+
+.markdown-rendered .hljs-tag {
+    color: #042c99;
+}
+
+.markdown-rendered :is(.hljs-attr, .hljs-attribute) {
+    color: #2b34e3;
+}
+
+.markdown-rendered :is(.hljs-property, .hljs-selector-class) {
+    color: #2e8b57;
+}
+
+.markdown-rendered .hljs-meta {
+    color: #099f8b;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.markdown-rendered .hljs-link {
+    color: #1565c0;
+    text-decoration: underline;
+}
+
+.markdown-rendered .hljs-deletion {
+    color: #d32f2f;
+    background-color: #fdd;
+}
+
+.markdown-rendered .hljs-type {
+    color: #1565c0;
+    font-weight: bold;
+}
+
+.markdown-rendered .hljs-title {
+    color: #2e8b57;
+    font-weight: bold;
+}
+
+/* —— 编辑模式（CM6） —— */
+.cm-s-obsidian .cm-keyword {
+    color: #222fa7;
+    font-weight: bold;
+}
+
+.cm-s-obsidian .cm-operator {
+    color: #006400;
+}
+
+.cm-s-obsidian .cm-variableName {
+    color: #239d37;
+    font-weight: bold;
+}
+
+.cm-s-obsidian .cm-variable-2 {
+    color: #108979;
+}
+
+.cm-s-obsidian .cm-typeName {
+    color: #183da2;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.cm-s-obsidian .cm-builtin {
+    color: #006400;
+    font-style: italic;
+}
+
+.cm-s-obsidian :is(.cm-atom, .cm-bool, .cm-null) {
+    color: #3b8f8f;
+}
+
+.cm-s-obsidian .cm-number {
+    color: #3e19cf;
+}
+
+.cm-s-obsidian .cm-def {
+    color: #10623e;
+    font-weight: bold;
+}
+
+.cm-s-obsidian :is(.cm-string, .cm-string-2) {
+    color: #0264bf;
+    font-style: italic;
+}
+
+.cm-s-obsidian .cm-comment {
+    color: #6a737d;
+    font-style: italic;
+}
+
+.cm-s-obsidian .cm-tagName {
+    color: #042c99;
+}
+
+.cm-s-obsidian .cm-attribute {
+    color: #2b34e3;
+}
+
+.cm-s-obsidian .cm-propertyName {
+    color: #2e8b57;
+}
+
+.cm-s-obsidian .cm-className {
+    color: #2e8b57;
+}
+
+.cm-s-obsidian .cm-meta {
+    color: #099f8b;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.cm-s-obsidian .cm-link {
+    color: #1565c0;
+    text-decoration: underline;
+}
+
+.cm-s-obsidian .cm-invalid {
+    color: #d32f2f;
+    background-color: #fdd;
+}
+
+.cm-s-obsidian .cm-heading {
+    color: #2e8b57;
+    font-weight: bold;
+}
+
+.cm-s-obsidian .cm-quote {
+    color: #3503a8;
+    font-style: italic;
+}
+
+.cm-s-obsidian :is(.cm-monospace, .cm-escape) {
+    color: #099f8b;
+}
+
+.cm-s-obsidian :is(.cm-punctuation, .cm-bracket) {
+    color: inherit;
+}
+
+/* —— 编辑模式代码块容器 ——
+   逐行白底 + inset 描边，形成连贯侧壁；首尾行附加圆角与三圆点 */
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock {
+    padding-left: 17px;
+    padding-right: 17px;
+    background-color: #ffffff;
+    color: var(--code-fences-color);
+    font-family: var(--font-monospace);
+    font-size: 0.95rem;
+    box-shadow:
+        inset 1px 0 0 rgba(47, 132, 94, 0.22),
+        inset -1px 0 0 rgba(47, 132, 94, 0.22);
+}
+
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin {
+    position: relative;
+    padding-top: 32px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    box-shadow:
+        inset 1px 0 0 rgba(47, 132, 94, 0.22),
+        inset -1px 0 0 rgba(47, 132, 94, 0.22),
+        inset 0 1px 0 rgba(47, 132, 94, 0.22),
+        0 -1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin::before {
+    content: " ";
+    position: absolute;
+    top: 12px;
+    left: 13px;
+    z-index: 1;
+    width: 12px;
+    height: 12px;
+    background: var(--code-fences-before-bg);
+    border-radius: 50%;
+    box-shadow: var(--code-fences-before-box-shadow);
+    transition: all 0.3s ease;
+}
+
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-begin:hover::before {
+    background: var(--code-fences-3circle-1);
+    box-shadow: 20px 0 var(--code-fences-3circle-2), 40px 0 var(--code-fences-3circle-3);
+}
+
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-codeblock-end {
+    margin-bottom: 0.8rem;
+    padding-bottom: 17px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow:
+        inset 1px 0 0 rgba(47, 132, 94, 0.22),
+        inset -1px 0 0 rgba(47, 132, 94, 0.22),
+        inset 0 -1px 0 rgba(47, 132, 94, 0.22),
+        0 2px 4px rgba(0, 0, 0, 0.10);
+}
+
+
+/* ===========================================================================
+   §8  Obsidian UI 主题
+   =========================================================================== */
+
+/* —— 标题栏 —— */
+.titlebar {
+    background-color: var(--background-secondary);
+}
+
+.titlebar-button {
+    color: var(--text-muted);
+}
+
+.titlebar-button:hover {
+    background-color: var(--outline-item-hover-bg-color);
+}
+
+/* —— 侧栏容器 —— */
+.workspace-split.mod-left-split .workspace-leaf-content,
+.workspace-split.mod-right-split .workspace-leaf-content {
+    background-color: var(--background-secondary);
+}
+
+.workspace-tab-header-container,
+.workspace-tabs .workspace-tab-header-container {
+    background-color: var(--background-secondary);
+    border-bottom: 1px solid var(--sidebar-content-file-list-item-border-color);
+}
+
+.workspace-tab-header {
+    color: var(--text-muted);
+}
+
+.workspace-tab-header.is-active {
+    color: var(--text-normal);
+    box-shadow: inset 0 -2px 0 var(--sidebar-bg-color);
+}
+
+.workspace-tab-header:hover {
+    color: var(--text-normal);
+}
+
+.workspace-tab-header-inner-close-button:hover {
+    background-color: var(--outline-item-hover-bg-color);
+}
+
+/* —— 文件树 ——
+   hover：浅绿底
+   选中：深绿底 + 白字
+   标签：基础态白底绿边绿字，选中态深绿底白字 */
+.nav-folder-title,
+.nav-file-title {
+    padding: 2px 6px;
+    color: var(--text-normal);
+    font-family: var(--font-interface);
+    border-left: 3px solid transparent;
+    border-radius: 4px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-folder-title:hover,
+.nav-file-title:hover {
+    background-color: rgba(66, 185, 131, 0.10);
+    border-left-color: transparent;
+}
+
+.nav-file-title.is-active,
+.nav-folder-title.is-active {
+    background-color: var(--sidebar-bg-color) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    border-left: 3px solid transparent !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+
+.nav-folder-collapse-indicator {
+    color: var(--sidebar-bg-color);
+}
+
+/* —— 文件标签（PNG 药丸） —— */
+.nav-file-tag,
+.suggestion-item .flair,
+.search-result-file-title .flair,
+.tree-item-flair,
+.workspace-leaf-content .nav-file-tag {
+    background-color: #ffffff !important;
+    color: var(--sidebar-bg-color) !important;
+    font-weight: 600;
+    border: 1px solid var(--sidebar-bg-color) !important;
+    border-radius: 999px;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.nav-file-title.is-active .nav-file-tag,
+.nav-file-title.is-selected .nav-file-tag,
+.suggestion-item.is-selected .flair,
+.tree-item-self.is-selected .tree-item-flair,
+.tree-item-self.is-active .tree-item-flair,
+.nav-file-tag.is-active,
+.nav-file-tag.is-selected {
+    background-color: var(--sidebar-bg-color) !important;
+    color: #ffffff !important;
+    border-color: var(--sidebar-bg-color) !important;
+}
+
+/* —— 大纲 —— */
+.outline-item {
+    border-radius: 4px;
+}
+
+.outline-item:hover {
+    background-color: var(--outline-item-hover-bg-color);
+}
+
+.tree-item-self.is-active {
+    color: var(--sidebar-bg-color);
+}
+
+/* —— 标签 —— */
+.tag,
+.cm-hashtag {
+    padding: 0 5px;
+    background-color: rgba(47, 132, 94, 0.10);
+    color: var(--sidebar-bg-color);
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+}
+
+.tag:hover,
+.cm-hashtag:hover {
+    background-color: rgba(47, 132, 94, 0.20);
+    color: var(--a-hover-color);
+}
+
+/* —— 状态栏 —— */
+.status-bar {
+    background-color: var(--background-secondary);
+    color: var(--text-muted);
+    font-family: var(--font-interface);
+    border-top: 1px solid var(--sidebar-content-file-list-item-border-color);
+}
+
+/* —— 命令面板 / 快速切换 —— */
+.prompt,
+.suggestion-container,
+.menu,
+.popover.hover-popover {
+    background-color: #fff;
+    color: var(--body-text-color);
+    border: 1px solid var(--sidebar-content-file-list-item-border-color);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.prompt-input,
+.prompt .prompt-input {
+    background-color: #fff;
+    color: var(--body-text-color);
+    border: none;
+    border-bottom: 1px solid var(--sidebar-content-file-list-item-border-color);
+}
+
+.suggestion-item.is-selected,
+.suggestion-item:hover {
+    background-color: var(--auto-suggest-container-bg-color) !important;
+    color: var(--body-text-color);
+}
+
+.menu-item:hover,
+.menu-item.selected {
+    background-color: var(--dropdown-menu-li-a-hover-color);
+    color: var(--body-text-color);
+}
+
+.menu-separator {
+    border-top: 1px solid var(--dropdown-menu-border-color);
+}
+
+/* —— 模态框 —— */
+.modal {
+    background-color: #f5f6f7;
+    border: none;
+    border-radius: 6px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.modal-close-button:hover {
+    background-color: var(--outline-item-hover-bg-color);
+}
+
+/* —— 设置面板（选中态：深绿底 + 白字） —— */
+.vertical-tab-header {
+    background-color: var(--background-secondary);
+}
+
+.vertical-tab-nav-item {
+    color: var(--body-text-color);
+    border-radius: 4px;
+}
+
+.vertical-tab-nav-item:hover {
+    background-color: var(--outline-item-hover-bg-color);
+}
+
+.vertical-tab-nav-item.is-active,
+.vertical-tab-nav-item.is-selected {
+    background-color: var(--sidebar-bg-color) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+}
+
+.vertical-tab-nav-item.is-active svg {
+    color: #ffffff !important;
+    stroke: #ffffff !important;
+}
+
+.vertical-tab-content {
+    background-color: var(--background-primary);
+}
+
+/* —— 按钮 —— */
+button,
+.mod-cta,
+.mod-warning {
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+button:not(.clickable-icon):hover {
+    background-color: var(--outline-item-hover-bg-color);
+}
+
+.mod-cta {
+    background-color: var(--sidebar-bg-color);
+    color: #fff;
+}
+
+.mod-cta:hover {
+    background-color: #256d4a;
+    color: #fff;
+}
+
+/* —— 下拉 / 输入 —— */
+select,
+input[type="text"],
+input[type="search"],
+input[type="number"],
+textarea {
+    background-color: #fff;
+    color: var(--body-text-color);
+    border: 1px solid var(--table-border-color);
+    border-radius: 6px;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+    border-color: var(--sidebar-bg-color);
+    box-shadow: 0 0 0 2px rgba(47, 132, 94, 0.15);
+}
+
+/* —— Ribbon 侧边图标栏 —— */
+.workspace-ribbon {
+    background-color: var(--background-secondary);
+    border-right: 1px solid var(--sidebar-content-file-list-item-border-color);
+}
+
+.workspace-ribbon .clickable-icon:hover {
+    background-color: var(--outline-item-hover-bg-color);
+    color: var(--sidebar-bg-color);
+}
+
+/* —— 复选框 —— */
+input[type="checkbox"] {
+    accent-color: var(--task-list-input-checked-bg-color);
+}
+
+
+/* ===========================================================================
+   §9  打印样式
+   =========================================================================== */
+@media print {
+    body {
+        margin: 0 1rem;
+        padding: 1rem;
+        zoom: 70%;
+    }
+
+    .markdown-rendered table {
+        border: none;
+        border-radius: 10px;
+        border-collapse: separate;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+
+    .markdown-rendered table :is(th, td) {
+        padding: 10px 16px;
+        border: none;
+    }
+
+    .markdown-rendered hr {
+        width: 1024px !important;
+        height: 2.5px;
+        margin: 1.2rem auto;
+        background: #2f845e;
+        border: none;
+        border-radius: 1.75px;
+        opacity: 0.8;
+    }
+}
